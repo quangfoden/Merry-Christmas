@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #0f0f2f, #0f0f1f);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            animation: backgroundShift 2s ease-in-out infinite;
+            font-family: 'Mountains of Christmas', cursive
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% {
+                background: linear-gradient(to bottom, #0f0f2f, #0f0f1f)
+            }
+            50% {
+                background: linear-gradient(to bottom, #1a1a3f, #1a1a2f)
+            }
+        }
+
+        .gift-box {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff0000, #ff4444);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 100;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 30px rgba(255,0,0,0.5);
+            border: 4px solid #ff9999;
+        }
+
+        .gift-box:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 0 40px rgba(255,0,0,0.7);
+        }
+
+        .gift-box::before {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 100%;
+            background: linear-gradient(90deg, #fff, #ffecec);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .gift-box::after {
+            content: '';
+            position: absolute;
+            height: 25px;
+            width: 100%;
+            background: linear-gradient(180deg, #fff, #ffecec);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .flower {
+            display: none;
+            position: absolute;
+            bottom: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99;
+        }
+
+        .flower-center {
+            width: 30px;
+            height: 30px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .petal {
+            position: absolute;
+            width: 25px;
+            height: 50px;
+            background: #ff69b4;
+            border-radius: 50%;
+            transform-origin: bottom center;
+        }
+
+        .petal:nth-child(1) { transform: rotate(0deg); }
+        .petal:nth-child(2) { transform: rotate(45deg); }
+        .petal:nth-child(3) { transform: rotate(90deg); }
+        .petal:nth-child(4) { transform: rotate(135deg); }
+        .petal:nth-child(5) { transform: rotate(180deg); }
+        .petal:nth-child(6) { transform: rotate(225deg); }
+        .petal:nth-child(7) { transform: rotate(270deg); }
+        .petal:nth-child(8) { transform: rotate(315deg); }
+
+        @keyframes flowerBloom {
+            from {
+                transform: translateX(-50%) scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .christmas-text {
+            position: absolute;
+            top: 10%;
+            font-size: clamp(3rem, 8vw, 6em);
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff6b6b;
+            animation: textFloat 3s ease-in-out infinite, glow 2s ease-in-out infinite;
+            font-family: 'Mountains of Christmas', cursive;
+            letter-spacing: 5px;
+            z-index: 2;
+            text-align: center;
+            width: 90%;
+            background: linear-gradient(45deg, #ff0000, #ff9999, #ff0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 12px rgba(255,0,0,0.6));
+            font-weight: 700;
+            text-transform: uppercase
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(-8px) rotate(-2deg) }
+            50% { transform: translateY(8px) rotate(2deg) }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff6b6b }
+            50% { text-shadow: 0 0 30px #ff0000, 0 0 40px #ff6b6b, 0 0 50px #ff9999 }
+        }
+
+        .tree-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: clamp(50px, 10vh, 100px);
+            width: 100%;
+            max-width: 800px;
+            padding: 0 20px;
+            box-sizing: border-box
+        }
+
+        .tree {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 0.5s;
+            width: 100%
+        }
+
+        .tree:hover {
+            transform: rotateY(10deg)
+        }
+
+        .tree-section {
+            width: 0;
+            border-left: min(120px, 15vw) solid transparent;
+            border-right: min(120px, 15vw) solid transparent;
+            border-bottom: min(100px, 12vw) solid #0a4f0a;
+            margin-top: min(-30px, -4vw);
+            filter: drop-shadow(0 0 10px rgba(15, 95, 15, 0.3));
+            animation: treeLight 3s ease-in-out infinite;
+            position: relative
+        }
+
+        .tree-section::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffeb3b;
+            animation: twinkle 1.5s ease-in-out infinite;
+            left: calc(50% - 4px);
+            top: 50%
+        }
+
+        .tree-section:nth-child(1) {
+            border-left-width: min(80px, 10vw);
+            border-right-width: min(80px, 10vw);
+            border-bottom-width: min(80px, 10vw)
+        }
+
+        .tree-section:nth-child(2) {
+            border-left-width: min(100px, 12vw);
+            border-right-width: min(100px, 12vw);
+            border-bottom-width: min(90px, 11vw)
+        }
+
+        .tree-section:nth-child(3) {
+            border-left-width: min(120px, 15vw);
+            border-right-width: min(120px, 15vw);
+            border-bottom-width: min(100px, 12vw)
+        }
+
+        .tree-trunk {
+            width: min(40px, 5vw);
+            height: min(60px, 8vw);
+            background: linear-gradient(to right, #5c3a1d, #8b4513, #5c3a1d);
+            margin-top: -10px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3)
+        }
+
+        @keyframes treeLight {
+            0%, 100% { border-bottom-color: #0a4f0a }
+            50% { border-bottom-color: #1a6f1a }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8) }
+            50% { opacity: 1; transform: scale(1.2) }
+        }
+
+        .decoration {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, #ff0000);
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+            animation: decorationGlow 2s ease-in-out infinite
+        }
+
+        @keyframes decorationGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255,0,0,0.5) }
+            50% { box-shadow: 0 0 20px rgba(255,0,0,0.8) }
+        }
+
+        .snow {
+            position: absolute;
+            width: min(8px, 1.5vw);
+            height: min(8px, 1.5vw);
+            background: white;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: snowfall linear infinite;
+            opacity: 0.8
+        }
+
+        @keyframes snowfall {
+            0% { transform: translateY(-100vh) rotate(0deg) }
+            100% { transform: translateY(100vh) rotate(360deg) }
+        }
+
+        .snowman {
+            position: absolute;
+            bottom: 20px;
+            z-index: 2;
+            transform: scale(min(1.3, calc(0.7 + 0.6 * (100vw / 768px))));
+            transition: transform 0.3s ease
+        }
+
+        .snowman:hover {
+            transform: scale(min(1.4, calc(0.75 + 0.65 * (100vw / 768px))))
+        }
+
+        .snowman-left {
+            left: 8%
+        }
+
+        .snowman-right {
+            right: 8%
+        }
+
+        .snowman-body {
+            width: min(100px, 12vw);
+            height: min(100px, 12vw);
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.1),
+                       0 5px 15px rgba(255,255,255,0.2);
+            animation: wobble 3s ease-in-out infinite
+        }
+
+        .snowman-head {
+            width: min(80px, 10vw);
+            height: min(80px, 10vw);
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            border-radius: 50%;
+            position: absolute;
+            top: min(-50px, -6vw);
+            left: min(10px, 1.5vw);
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.1),
+                       0 5px 15px rgba(255,255,255,0.2);
+            animation: headBob 3s ease-in-out infinite
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-3deg) }
+            50% { transform: rotate(3deg) }
+        }
+
+        @keyframes headBob {
+            0%, 100% { transform: translateY(-3px) rotate(-4deg) }
+            50% { transform: translateY(3px) rotate(4deg) }
+        }
+
+        .snowman-eye {
+            width: min(12px, 1.4vw);
+            height: min(14px, 1.6vw);
+            background: #222;
+            border-radius: 50%;
+            position: absolute;
+            animation: blink 4s infinite;
+            box-shadow: inset 2px 2px 4px rgba(255,255,255,0.4)
+        }
+
+        @keyframes blink {
+            0%, 48%, 52%, 100% { transform: scaleY(1) }
+            50% { transform: scaleY(0.1) }
+        }
+
+        .snowman-eye.left {
+            top: 33%;
+            left: 25%
+        }
+
+        .snowman-eye.right {
+            top: 33%;
+            right: 25%
+        }
+
+        .snowman-nose {
+            width: 0;
+            height: 0;
+            border-left: min(10px, 1.2vw) solid transparent;
+            border-right: min(10px, 1.2vw) solid transparent;
+            border-bottom: min(25px, 3vw) solid #ff7f50;
+            position: absolute;
+            top: 42%;
+            left: 46%;
+            transform: rotate(90deg);
+            animation: noseWiggle 3s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2))
+        }
+
+        @keyframes noseWiggle {
+            0%, 100% { transform: rotate(90deg) translateX(-2px) }
+            50% { transform: rotate(90deg) translateX(2px) }
+        }
+
+        .snowman-scarf {
+            width: min(90px, 11vw);
+            height: min(20px, 2.5vw);
+            background: linear-gradient(to right, #ff4444, #ff6b6b);
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            border-radius: 8px;
+            transform-origin: center left;
+            animation: scarfWave 3s ease-in-out infinite;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+        }
+
+        @keyframes scarfWave {
+            0%, 100% { transform: rotate(-3deg) }
+            50% { transform: rotate(3deg) }
+        }
+
+        .snowman-mouth {
+            width: min(25px, 3vw);
+            height: min(12px, 1.4vw);
+            border-bottom: 4px solid #333;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 25%;
+            left: 35%;
+            transform: rotate(-5deg)
+        }
+
+        @media (max-width: 768px) {
+            .snowman-left {
+                left: 2%
+            }
+            
+            .snowman-right {
+                right: 2%
+            }
+        }
+
+        @media (max-width: 480px) {
+            .snowman {
+                transform: scale(0.9)
+            }
+            
+            .tree-container {
+                margin-top: 30px
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="christmas-text">Merry Christmas!</div>
+    <div class="tree-container">
+        <div class="tree">
+            <div class="tree-section">
+                <div class="decoration" style="left: -20px; top: 30%"></div>
+                <div class="decoration" style="right: -20px; top: 60%"></div>
+            </div>
+            <div class="tree-section">
+                <div class="decoration" style="left: -30px; top: 40%"></div>
+                <div class="decoration" style="right: -25px; top: 20%"></div>
+                <div class="decoration" style="left: 10px; top: 70%"></div>
+            </div>
+            <div class="tree-section">
+                <div class="decoration" style="left: -40px; top: 30%"></div>
+                <div class="decoration" style="right: -35px; top: 50%"></div>
+                <div class="decoration" style="left: 20px; top: 70%"></div>
+                <div class="decoration" style="right: 15px; top: 25%"></div>
+            </div>
+        </div>
+        <div class="tree-trunk"></div>
+    </div>
+
+    <div class="snowman snowman-left">
+        <div class="snowman-head">
+            <div class="snowman-eye left"></div>
+            <div class="snowman-eye right"></div>
+            <div class="snowman-nose"></div>
+            <div class="snowman-mouth"></div>
+            <div class="snowman-scarf"></div>
+        </div>
+        <div class="snowman-body"></div>
+    </div>
+
+    <div class="snowman snowman-right">
+        <div class="snowman-head">
+            <div class="snowman-eye left"></div>
+            <div class="snowman-eye right"></div>
+            <div class="snowman-nose"></div>
+            <div class="snowman-mouth"></div>
+            <div class="snowman-scarf"></div>
+        </div>
+        <div class="snowman-body"></div>
+    </div>
+
+    <div class="gift-box"></div>
+    <div class="flower">
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="flower-center"></div>
+    </div>
+
+    <script>
+        function createSnow() {
+            const snow = document.createElement('div')
+            snow.classList.add('snow')
+            snow.style.left = Math.random() * 100 + 'vw'
+            snow.style.opacity = Math.random() * 0.6 + 0.4
+            snow.style.animationDuration = Math.random() * 3 + 2 + 's'
+            document.body.appendChild(snow)
+            setTimeout(() => {
+                snow.style.opacity = '0'
+                snow.style.transition = 'opacity 0.5s'
+                setTimeout(() => snow.remove(), 500)
+            }, 4500)
+        }
+
+        setInterval(createSnow, 50)
+
+        // Gift box click handler
+        document.querySelector('.gift-box').addEventListener('click', function() {
+            const flower = document.querySelector('.flower')
+            const giftBox = document.querySelector('.gift-box')
+            flower.style.display = 'block'
+            flower.style.animation = 'flowerBloom 1s forwards'
+            giftBox.style.display = 'none'
+        })
+    </script>
+</body>
+</html>
